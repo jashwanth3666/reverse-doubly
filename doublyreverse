@@ -1,0 +1,87 @@
+import java.util.*;
+
+class Node {
+    int data;
+    Node prev;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+        this.prev = null;
+    }
+}
+
+class Main {
+    Node head;
+
+    public Main() {
+        this.head = null;
+    }
+
+    public void append(int data) {
+        Node newNode = new Node(data);
+
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newNode;
+            newNode.prev = temp;
+        }
+    }
+
+    public void display() {
+        while(head.prev!=null){
+        head=head.prev;
+        }
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " <-> ");
+            current = current.next;
+        }
+        System.out.println("null");
+    }
+
+    public void reverse() {
+        Node current = head;
+        Node temp = null;
+
+        while (current != null) {
+            temp = current.next;
+            current.next = current.prev;
+            current.prev = temp;
+
+            current = current.prev;
+        }
+
+        if (temp != null) {
+            head = temp.prev;
+        }
+    }
+
+    public static void main(String[] args) {
+        Main list = new Main();
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter length of the list:");
+        int n = sc.nextInt();
+
+        while (n-- > 0) {
+            System.out.println("Enter data:");
+            int num = sc.nextInt();
+            list.append(num);
+        }
+
+        System.out.println("Original list:");
+        list.display();
+
+        list.reverse();
+
+        System.out.println("Reversed list:");
+        list.display();
+    }
+}
